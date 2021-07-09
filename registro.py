@@ -1,7 +1,7 @@
-from pessoa import Pessoa
+from abc import ABC, abstractmethod
 
 
-class Registro:
+class Registro(ABC):
     def __init__(self):
         self.__DB = []
 
@@ -9,16 +9,14 @@ class Registro:
     def DB(self):
         return self.__DB
 
-    def adicionar_pepssoa(self, pessoa):
-        if isinstance(pessoa, Pessoa):
-            self.__DB.append(pessoa)
+    @abstractmethod
+    def adicionar(self, elemento):
+        pass
 
-    def remover_pessoa(self, cpf):
-        for pessoa in self.__DB:
-            if pessoa.cpf == cpf:
-                self.__DB.remove(pessoa)
+    @abstractmethod
+    def remover(self, id):
+        pass
 
-    def consultar_pessoa(self, cpf):
-        for pessoa in self.__DB:
-            if pessoa.cpf == cpf:
-                return pessoa
+    @abstractmethod
+    def consultar(self, id):
+        pass

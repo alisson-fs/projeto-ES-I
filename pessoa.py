@@ -1,5 +1,3 @@
-
-
 class Pessoa:
     def __init__(self, nome, cpf, nascimento, admin, senha):
         self.__nome = nome
