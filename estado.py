@@ -7,7 +7,8 @@ class Estado(ABC):
         self.__window = None
         self.__admin = admin
         self.__assinante = assinante
-
+        self.__erro = False
+        
     @property
     def container(self):
         return self.__container
@@ -23,6 +24,14 @@ class Estado(ABC):
     @property
     def assinante(self):
         return self.__assinante
+
+    @property
+    def erro(self):
+        return self.__erro
+
+    @window.setter
+    def window(self, window):
+        self.__window = window
 
     @window.setter
     def window(self, window):
@@ -40,6 +49,14 @@ class Estado(ABC):
     def assinante(self, assinante):
         self.__assinante = assinante
 
+    @erro.setter
+    def erro(self, erro):
+        self.__erro = erro
+
     @abstractmethod
     def run(self):
+        pass
+
+    @abstractmethod
+    def ler_evento(self, event, values):
         pass

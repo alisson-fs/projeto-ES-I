@@ -1,3 +1,5 @@
+import datetime
+
 from estado import Estado
 from pessoa import Pessoa
 from filme import Filme
@@ -12,6 +14,8 @@ from estado_visualizar_pessoa import EstadoVisualizarPessoa
 from estado_editar_pessoa import EstadoEditarPessoa
 from estado_editar_filme import EstadoEditarFilme
 from estado_assinar import EstadoAssinar
+from estado_adicionar_filme import EstadoAdicionarFilme
+from estado_pessoas import EstadoPessoas
 
 
 sg.theme("DarkTeal10")
@@ -28,30 +32,35 @@ catalogo.adicionar(Filme("Harry Potter 7", "8", "144min", "Aventura", "12"))
 catalogo.adicionar(Filme("Harry Potter 8", "9", "144min", "Aventura", "12"))
 
 pessoas = Pessoas()
-pessoas.adicionar(Pessoa("Eduardo Betim", "107.879.469-31", "10/05/2000", True, "123"))
-pessoas.adicionar(Pessoa("Alisson Fabra da Silva", "122.146.229-69", "18/09/2000", True, "123"))
+pessoas.adicionar(Pessoa("Admin", "000", "10/07/2021", "000", True, True))
+pessoas.adicionar(Pessoa("Eduardo Betim", "10787946931", "10/05/2000", "123", False, True))
+pessoas.consultar("10787946931").vencimento_assinatura = datetime.date.today()+datetime.timedelta(days=30)
+pessoas.adicionar(Pessoa("Alisson Fabra da Silva", "12214622969", "18/09/2000", "321", False, False))
 
-estados = {"login": EstadoLogin(False, False),
-           "cadastro_admin": EstadoCadastro(True, False),
-           "cadastro_cliente": EstadoCadastro(False, False),
+estados = {"login": EstadoLogin(False, False, pessoas),
+           "cadastro_admin": EstadoCadastro(True, False, pessoas),
+           "cadastro_cliente": EstadoCadastro(False, False, pessoas),
            "catalogo_admin": EstadoCatalogo(True, True, catalogo),
            "catalogo_assinante": EstadoCatalogo(False, True, catalogo),
            "catalogo_cliente": EstadoCatalogo(False, False, catalogo),
-           "visualizar_filme_admin": EstadoVisualizarFilme(True, True),
-           "visualizar_filme_cliente": EstadoVisualizarFilme(False, True),
-           "visualizar_pessoa": EstadoVisualizarPessoa(True, True),
-           "editar_pessoa": EstadoEditarPessoa(True, True),
-           "editar_filme": EstadoEditarFilme(True, True),
-           "assinar": EstadoAssinar(False, False)}
+           "visualizar_filme_admin": EstadoVisualizarFilme(True, True, catalogo),
+           "visualizar_filme_cliente": EstadoVisualizarFilme(False, True, catalogo),
+           "visualizar_pessoa": EstadoVisualizarPessoa(True, True, pessoas),
+           "editar_pessoa": EstadoEditarPessoa(True, True, pessoas),
+           "editar_filme": EstadoEditarFilme(True, True, catalogo),
+           "assinar": EstadoAssinar(False, False, pessoas),
+           "adicionar_filme": EstadoAdicionarFilme(True, True, catalogo),
+           "lista_pessoas": EstadoPessoas(True, True, pessoas)}
 
 estados["editar_filme"].filme = catalogo.consultar("Harry Potter 2")
-estados["editar_pessoa"].pessoa = pessoas.consultar("107.879.469-31")
+estados["editar_pessoa"].pessoa = pessoas.consultar("107879469-31")
 
-estado = "visualizar_filme_admin"
+estado = "login"
 while True:
-    proximo_estado = estados[estado].run()
-    estado = proximo_estado
+    estados[estado].run()
     event, values = estados[estado].window.read()
+    proximo_estado = estados[estado].ler_evento(event, values)
+    estado = proximo_estado
     if event == sg.WIN_CLOSED:
         break
 estados[estado].window.close()

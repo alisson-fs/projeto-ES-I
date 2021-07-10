@@ -1,10 +1,13 @@
 from estado import Estado
+from pessoa import Pessoa
+from pessoas import Pessoas
 import PySimpleGUI as sg
 
 
 class EstadoCadastro(Estado):
-    def __init__(self, admin, assinante):
+    def __init__(self, admin, assinante, pessoas):
         super().__init__(admin, assinante)
+        self.__pessoas = pessoas
 
     def run(self):
         linha0 = [sg.Text("UFLIX", size=(30,1), font=("Helvetica",25))]
@@ -22,16 +25,51 @@ class EstadoCadastro(Estado):
         linha8 = [sg.InputText("", key="senha1")]
         linha9 = [sg.Text("Confirmar senha:")]
         linha10 = [sg.InputText("", key="senha2")]
-        linha11 = [sg.Checkbox("Administrador", key="admin", size=(15,1))]
-        linha12 = [sg.Button("Salvar")]
+        linha11 = [sg.Text("ERRO: Senhas não compatíveis!", font=("Helvetica",10))]
+        linha12 = [sg.Checkbox("Administrador", key="admin", size=(15,1))]
+        linha13 = [sg.Button("Cancelar"), sg.Button("Salvar")]
+        self.container = [linha0, linha1, linha2, linha3, linha4, linha5,
+                          linha6, linha7, linha8, linha9, linha10, linha13]
+        if self.erro:
+                self.container.insert(11, linha11)
         if self.admin:
-            self.container = [linha0, linha1, linha2, linha3, linha4, linha5, linha6,
-                              linha7, linha8, linha9, linha10, linha11, linha12]
-        else:
-            self.container = [linha0, linha1, linha2, linha3, linha4, linha5, linha6,
-                              linha7, linha8, linha9, linha10, linha12]
+            if self.erro:
+                self.container.insert(12, linha12)
+            else:
+                self.container.insert(11, linha12)
+
         self.window = sg.Window("UFLIX", self.container, font=("Helvetica", 14))
-        
+        self.erro = False
+
+    def ler_evento(self, event, values):
+        if event == "Salvar":
+            senha1 = values["senha1"]
+            senha2 = values["senha2"]
+            self.window.close()
+            if senha1 == senha2:
+                nome = values["nome"]
+                cpf = values["cpf"]
+                nascimento = str(values["dia"])+"/"+str(values["mes"])+"/"+str(values["ano"])
+                if self.admin:
+                    admin = values["admin"]
+                else:
+                    admin = False
+                senha = senha1
+                pessoa = Pessoa(nome, cpf, nascimento, senha, admin)
+                self.__pessoas.adicionar(pessoa)
+                return "login"
+            else:
+                self.erro = True
+                if self.admin:
+                    return "cadastro_admin"
+                else:
+                    return "cadastro_cliente"
+        if event == "Cancelar":
+            self.window.close()
+            if self.admin:
+                return "lista_pessoas"
+            else:
+                return "login"
         if self.admin:
             return "cadastro_admin"
         else:

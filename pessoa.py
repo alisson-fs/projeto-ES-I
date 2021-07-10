@@ -1,10 +1,16 @@
+from cartao import Cartao
+
+
 class Pessoa:
-    def __init__(self, nome, cpf, nascimento, admin, senha):
+    def __init__(self, nome, cpf, nascimento, senha, admin=False, assinante=False):
         self.__nome = nome
         self.__cpf = cpf
         self.__nascimento =nascimento
-        self.__admin = admin
         self.__senha = senha
+        self.__cartao = Cartao(" -", " -", " -", " -")
+        self.__admin = admin
+        self.__assinante = assinante
+        self.__vencimento_assinatura = None
 
     @property
     def nome(self):
@@ -26,6 +32,18 @@ class Pessoa:
     def senha(self):
         return self.__senha
 
+    @property
+    def assinante(self):
+        return self.__assinante
+    
+    @property
+    def cartao(self):
+        return self.__cartao
+
+    @property
+    def vencimento_assinatura(self):
+        return self.__vencimento_assinatura
+
     @nome.setter
     def nome(self, nome):
         self.__nome = nome
@@ -45,3 +63,15 @@ class Pessoa:
     @senha.setter
     def senha(self, senha):
         self.__senha = senha
+
+    @assinante.setter
+    def assinante(self, assinante):
+        self.__assinante = assinante
+        
+    @cartao.setter
+    def cartao(self, cartao):
+        self.__cartao = cartao
+
+    @vencimento_assinatura.setter
+    def vencimento_assinatura(self, vencimento_assinatura):
+        self.__vencimento_assinatura = vencimento_assinatura
