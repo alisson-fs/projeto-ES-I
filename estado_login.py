@@ -5,9 +5,9 @@ import PySimpleGUI as sg
 
 
 class EstadoLogin(Estado):
-    def __init__(self, admin, assinante, pessoas):
+    def __init__(self, admin, assinante, registro_pessoas):
         super().__init__(admin, assinante)
-        self.__pessoas = pessoas
+        self.__registro_pessoas = registro_pessoas
 
     def run(self):
         linha0 = [sg.Text("UFLIX", size=(30,1), font=("Helvetica",25))]
@@ -28,7 +28,7 @@ class EstadoLogin(Estado):
             self.window.close()
             return "cadastro_cliente"
         if event == "Entrar":
-            pessoa = self.__pessoas.consultar(values["cpf"])
+            pessoa = self.__registro_pessoas.consultar(values["cpf"])
             self.window.close()
             if isinstance(pessoa, Pessoa):
                 if pessoa.cpf == values["cpf"] and pessoa.senha == values["senha"]:

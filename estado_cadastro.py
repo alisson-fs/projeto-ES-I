@@ -1,13 +1,13 @@
 from estado import Estado
 from pessoa import Pessoa
-from pessoas import Pessoas
+from registro_pessoas import RegistroPessoas
 import PySimpleGUI as sg
 
 
 class EstadoCadastro(Estado):
-    def __init__(self, admin, assinante, pessoas):
+    def __init__(self, admin, assinante, registro_pessoas):
         super().__init__(admin, assinante)
-        self.__pessoas = pessoas
+        self.__registro_pessoas = registro_pessoas
 
     def run(self):
         linha0 = [sg.Text("UFLIX", size=(30,1), font=("Helvetica",25))]
@@ -56,7 +56,7 @@ class EstadoCadastro(Estado):
                     admin = False
                 senha = senha1
                 pessoa = Pessoa(nome, cpf, nascimento, senha, admin)
-                self.__pessoas.adicionar(pessoa)
+                self.__registro_pessoas.adicionar(pessoa)
                 return "login"
             else:
                 self.erro = True

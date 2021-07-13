@@ -6,9 +6,9 @@ import datetime
 
 
 class EstadoAssinar(Estado):
-    def __init__(self, admin, assinante, registro):
+    def __init__(self, admin, assinante, registro_pessoas):
         super().__init__(admin, assinante)
-        self.__registro = registro
+        self.__registro_pessoas = registro_pessoas
 
     def run(self):
         linha0 = [sg.Text("UFLIX", size=(30,1), font=("Helvetica",25))]
@@ -20,9 +20,9 @@ class EstadoAssinar(Estado):
         linha6 = [sg.Text("Número do cartão:")]
         linha7 = [sg.InputText("", key="num_cartao")]
         linha8 = [sg.Text("Validade:")]
-        linha9 = [sg.InputCombo(tuple(str(range(1, 13))), key="mes", size=(5,1)),
+        linha9 = [sg.InputCombo(tuple(range(1, 13)), key="mes", size=(5,1)),
                   sg.Text("/"),
-                  sg.InputCombo(tuple(str(range(50, 10, -1))), key="ano", size=(5,1))]
+                  sg.InputCombo(tuple(range(50, 10, -1)), key="ano", size=(5,1))]
         linha10 = [sg.Text("CVV:")]
         linha11 = [sg.InputText("", key="cvv")]
         linha12 = [sg.Button("Cancelar"), sg.Button("Assinar")]
@@ -34,7 +34,7 @@ class EstadoAssinar(Estado):
 
     def ler_evento(self, event, values):
         if event == "Assinar":
-            pessoa = self.__registro.consultar(values["cpf"])
+            pessoa = self.__registro_pessoas.consultar(values["cpf"])
             self.window.close()
             if isinstance(pessoa, Pessoa):
                 nome_cartao = values["nome_cartao"]

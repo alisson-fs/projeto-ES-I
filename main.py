@@ -4,7 +4,7 @@ from estado import Estado
 from pessoa import Pessoa
 from filme import Filme
 from catalogo import Catalogo
-from pessoas import Pessoas
+from registro_pessoas import RegistroPessoas
 import PySimpleGUI as sg
 from estado_login import EstadoLogin
 from estado_cadastro import EstadoCadastro
@@ -15,7 +15,7 @@ from estado_editar_pessoa import EstadoEditarPessoa
 from estado_editar_filme import EstadoEditarFilme
 from estado_assinar import EstadoAssinar
 from estado_adicionar_filme import EstadoAdicionarFilme
-from estado_pessoas import EstadoPessoas
+from estado_gerenciar_pessoas import EstadoGerenciarPessoas
 
 
 sg.theme("DarkTeal10")
@@ -31,29 +31,29 @@ catalogo.adicionar(Filme("Harry Potter 6", "7", "144min", "Aventura", "12"))
 catalogo.adicionar(Filme("Harry Potter 7", "8", "144min", "Aventura", "12"))
 catalogo.adicionar(Filme("Harry Potter 8", "9", "144min", "Aventura", "12"))
 
-pessoas = Pessoas()
-pessoas.adicionar(Pessoa("Admin", "000", "10/07/2021", "000", True, True))
-pessoas.adicionar(Pessoa("Eduardo Betim", "10787946931", "10/05/2000", "123", False, True))
-pessoas.consultar("10787946931").vencimento_assinatura = datetime.date.today()+datetime.timedelta(days=30)
-pessoas.adicionar(Pessoa("Alisson Fabra da Silva", "12214622969", "18/09/2000", "321", False, False))
+registro_pessoas = RegistroPessoas()
+registro_pessoas.adicionar(Pessoa("Admin", "000", "10/07/2021", "000", True, True))
+registro_pessoas.adicionar(Pessoa("Eduardo Betim", "10787946931", "10/05/2000", "123", False, True))
+registro_pessoas.consultar("10787946931").vencimento_assinatura = datetime.date.today()+datetime.timedelta(days=30)
+registro_pessoas.adicionar(Pessoa("Alisson Fabra da Silva", "12214622969", "18/09/2000", "321", False, False))
 
-estados = {"login": EstadoLogin(False, False, pessoas),
-           "cadastro_admin": EstadoCadastro(True, False, pessoas),
-           "cadastro_cliente": EstadoCadastro(False, False, pessoas),
+estados = {"login": EstadoLogin(False, False, registro_pessoas),
+           "cadastro_admin": EstadoCadastro(True, False, registro_pessoas),
+           "cadastro_cliente": EstadoCadastro(False, False, registro_pessoas),
            "catalogo_admin": EstadoCatalogo(True, True, catalogo),
            "catalogo_assinante": EstadoCatalogo(False, True, catalogo),
            "catalogo_cliente": EstadoCatalogo(False, False, catalogo),
            "visualizar_filme_admin": EstadoVisualizarFilme(True, True, catalogo),
            "visualizar_filme_cliente": EstadoVisualizarFilme(False, True, catalogo),
-           "visualizar_pessoa": EstadoVisualizarPessoa(True, True, pessoas),
-           "editar_pessoa": EstadoEditarPessoa(True, True, pessoas),
+           "visualizar_pessoa": EstadoVisualizarPessoa(True, True, registro_pessoas),
+           "editar_pessoa": EstadoEditarPessoa(True, True, registro_pessoas),
            "editar_filme": EstadoEditarFilme(True, True, catalogo),
-           "assinar": EstadoAssinar(False, False, pessoas),
+           "assinar": EstadoAssinar(False, False, registro_pessoas),
            "adicionar_filme": EstadoAdicionarFilme(True, True, catalogo),
-           "lista_pessoas": EstadoPessoas(True, True, pessoas)}
+           "lista_pessoas": EstadoGerenciarPessoas(True, True, registro_pessoas)}
 
 estados["editar_filme"].filme = catalogo.consultar("Harry Potter 2")
-estados["editar_pessoa"].pessoa = pessoas.consultar("107879469-31")
+estados["editar_pessoa"].pessoa = registro_pessoas.consultar("107879469-31")
 
 estado = "login"
 while True:

@@ -1,6 +1,5 @@
 from estado import Estado
 from filme import Filme
-from catalogo import Catalogo
 import PySimpleGUI as sg
 
 

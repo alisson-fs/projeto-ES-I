@@ -2,7 +2,7 @@ from pessoa import Pessoa
 from registro import Registro
 
 
-class Pessoas(Registro):
+class RegistroPessoas(Registro):
     def __init__(self):
         super().__init__()
         self.atual = Pessoa(" -", " -", " -", " -")
