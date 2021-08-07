@@ -1,7 +1,4 @@
 import datetime
-from estado_alugados import EstadoAlugados
-
-from estado import Estado
 from pessoa import Pessoa
 from filme import Filme
 from catalogo import Catalogo
@@ -19,6 +16,7 @@ from estado_adicionar_filme import EstadoAdicionarFilme
 from estado_gerenciar_pessoas import EstadoGerenciarPessoas
 from estado_alugar import EstadoAlugar
 from estado_alugados import EstadoAlugados
+from estado_avaliar import EstadoAvaliar
 
 
 sg.theme("DarkTeal10")
@@ -56,7 +54,8 @@ estados = {"login": EstadoLogin(False, False, registro_pessoas),
            "adicionar_filme": EstadoAdicionarFilme(True, True, catalogo),
            "lista_pessoas": EstadoGerenciarPessoas(True, True, registro_pessoas),
            "alugar": EstadoAlugar(False, False, registro_pessoas, catalogo),
-           "alugados": EstadoAlugados(False, False, registro_pessoas, catalogo)}
+           "alugados": EstadoAlugados(False, False, registro_pessoas, catalogo),
+           "avaliar": EstadoAvaliar(False, False, catalogo)}
 
 estados["editar_filme"].filme = catalogo.consultar("Harry Potter 2")
 estados["editar_pessoa"].pessoa = registro_pessoas.consultar("107879469-31")
@@ -69,4 +68,3 @@ while True:
     estado = proximo_estado
     if event == sg.WIN_CLOSED:
         break
-estados[estado].window.close()

@@ -16,11 +16,17 @@ class EstadoVisualizarFilme(Estado):
         linha3 = [sg.Text(f"Duração: {self.__catalogo.atual.duracao}", size=(30,1), font=("Helvetica",12))]
         linha4 = [sg.Text(f"Gênero: {self.__catalogo.atual.genero}", size=(30,1), font=("Helvetica",12))]
         linha5 = [sg.Text(f"Classificação: {self.__catalogo.atual.classificacao}", size=(30,1), font=("Helvetica",12))]
-        if self.admin:
-            linha6 = [sg.Button("Voltar"), sg.Button("Assistir"), sg.Button("Editar")]
+        if self.__catalogo.atual.n_avaliacoes == 0:
+            nota = 0
         else:
-            linha6 = [sg.Button("Voltar"), sg.Button("Assistir")]
-        self.container = [linha0, linha1, linha2, linha3, linha4, linha5, linha6]
+            nota = self.__catalogo.atual.soma_avaliacoes/self.__catalogo.atual.n_avaliacoes
+        n_notas = self.__catalogo.atual.n_avaliacoes
+        linha6 = [sg.Text(f"Avaliação: Nota {nota:.1f}/10 de {n_notas} avaliações.", size=(30,1), font=("Helvetica",12))]
+        if self.admin:
+            linha7 = [sg.Button("Voltar"), sg.Button("Assistir"), sg.Button("Editar")]
+        else:
+            linha7 = [sg.Button("Voltar"), sg.Button("Assistir"), sg.Button("Avaliar")]
+        self.container = [linha0, linha1, linha2, linha3, linha4, linha5, linha6, linha7]
         self.window = sg.Window("UFLIX", self.container, font=("Helvetica", 14))
  
     def ler_evento(self, event, values):
@@ -41,6 +47,9 @@ class EstadoVisualizarFilme(Estado):
                 return "visualizar_filme_admin"
             else:
                 return "visualizar_filme_cliente"
+        if event == "Avaliar":
+            self.window.close()
+            return "avaliar"
         if self.admin:
             return "visualizar_filme_admin"
         else:

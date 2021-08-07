@@ -5,6 +5,8 @@ class Filme:
         self.__duracao = duracao
         self.__genero = genero
         self.__classificacao = classificacao
+        self.__n_avaliacoes = 0
+        self.__soma_avaliacoes = 0
 
     @property
     def titulo(self):
@@ -26,6 +28,14 @@ class Filme:
     def classificacao(self):
         return self.__classificacao
 
+    @property
+    def n_avaliacoes(self):
+        return self.__n_avaliacoes
+    
+    @property
+    def soma_avaliacoes(self):
+        return self.__soma_avaliacoes
+
     @titulo.setter
     def titulo(self, titulo):
         self.__titulo = titulo
@@ -45,3 +55,11 @@ class Filme:
     @classificacao.setter
     def classificacao(self, classificacao):
         self.__classificacao = classificacao
+
+    @n_avaliacoes.setter
+    def n_avaliacoes(self, n_avaliacoes):
+        self.__n_avaliacoes = n_avaliacoes
+
+    @soma_avaliacoes.setter
+    def soma_avaliacoes(self, soma_avaliacoes):
+        self.__soma_avaliacoes = soma_avaliacoes
