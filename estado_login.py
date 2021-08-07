@@ -32,6 +32,7 @@ class EstadoLogin(Estado):
             self.window.close()
             if isinstance(pessoa, Pessoa):
                 if pessoa.cpf == values["cpf"] and pessoa.senha == values["senha"]:
+                    self.__registro_pessoas.atual = pessoa
                     if pessoa.admin:
                         return "catalogo_admin"
                     elif pessoa.assinante:

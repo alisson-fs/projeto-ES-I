@@ -28,8 +28,10 @@ class EstadoVisualizarFilme(Estado):
             self.window.close()
             if self.admin:
                 return "catalogo_admin"
-            else:
+            elif self.assinante:
                 return "catalogo_assinante"
+            else:
+                return "catalogo_cliente"
         if event == "Editar":
             self.window.close()
             return "editar_filme"

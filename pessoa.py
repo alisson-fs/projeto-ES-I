@@ -11,6 +11,7 @@ class Pessoa:
         self.__admin = admin
         self.__assinante = assinante
         self.__vencimento_assinatura = None
+        self.__alugueis = []
 
     @property
     def nome(self):
@@ -44,6 +45,10 @@ class Pessoa:
     def vencimento_assinatura(self):
         return self.__vencimento_assinatura
 
+    @property
+    def alugueis(self):
+        return self.__alugueis
+
     @nome.setter
     def nome(self, nome):
         self.__nome = nome
@@ -67,7 +72,7 @@ class Pessoa:
     @assinante.setter
     def assinante(self, assinante):
         self.__assinante = assinante
-        
+
     @cartao.setter
     def cartao(self, cartao):
         self.__cartao = cartao
@@ -75,3 +80,28 @@ class Pessoa:
     @vencimento_assinatura.setter
     def vencimento_assinatura(self, vencimento_assinatura):
         self.__vencimento_assinatura = vencimento_assinatura
+
+    @alugueis.setter
+    def alugueis(self, alugueis):
+        self.__alugueis = alugueis
+
+    def adicionar_aluguel(self, aluguel):
+        self.__alugueis.append(aluguel)
+
+    def retirar_aluguel(self, filme):
+        for aluguel in self.__alugueis:
+            if aluguel.filme == filme:
+                self.__alugueis.remove(aluguel)
+
+    def gerar_lista_alugados(self):
+        lista = []
+        for aluguel in self.__alugueis:
+            lista.append(aluguel.filme.titulo)
+        return lista
+
+    def verifica_alugado(self, filme):
+        alugado = False
+        for aluguel in self.__alugueis:
+            if aluguel.filme == filme:
+                alugado = True
+        return alugado

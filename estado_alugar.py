@@ -1,14 +1,16 @@
 from estado import Estado
 from cartao import Cartao
 from pessoa import Pessoa
+from aluguel import Aluguel
 import PySimpleGUI as sg
 import datetime
 
 
-class EstadoAssinar(Estado):
-    def __init__(self, admin, assinante, registro_pessoas):
+class EstadoAlugar(Estado):
+    def __init__(self, admin, assinante, registro_pessoas, catalogo):
         super().__init__(admin, assinante)
         self.__registro_pessoas = registro_pessoas
+        self.__catalogo = catalogo
 
     def run(self):
         linha0 = [sg.Text("UFLIX", size=(30,1), font=("Helvetica",25))]
@@ -25,7 +27,7 @@ class EstadoAssinar(Estado):
                   sg.InputCombo(tuple(range(50, 10, -1)), key="ano", size=(5,1))]
         linha10 = [sg.Text("CVV:")]
         linha11 = [sg.InputText("", key="cvv")]
-        linha12 = [sg.Button("Cancelar"), sg.Button("Assinar")]
+        linha12 = [sg.Button("Cancelar"), sg.Button("Alugar")]
         self.container = [linha0, linha1, linha2, linha4, linha5, linha6, linha7,
                           linha8, linha9, linha10, linha11, linha12]
         if self.erro:
@@ -33,7 +35,7 @@ class EstadoAssinar(Estado):
         self.window = sg.Window("UFLIX", self.container, font=("Helvetica", 14))
 
     def ler_evento(self, event, values):
-        if event == "Assinar":
+        if event == "Alugar":
             pessoa = self.__registro_pessoas.consultar(values["cpf"])
             self.window.close()
             if isinstance(pessoa, Pessoa):
@@ -43,13 +45,15 @@ class EstadoAssinar(Estado):
                 cvv = values["cvv"]
                 cartao = Cartao(nome_cartao, num_cartao, validade, cvv)
                 pessoa.cartao = cartao
-                pessoa.assinante = True
-                pessoa.vencimento_assinatura = datetime.date.today()+datetime.timedelta(days=30)
-                return "catalogo_assinante"
+                inicio = datetime.date.today()
+                fim = datetime.date.today()+datetime.timedelta(days=7)
+                aluguel = Aluguel(inicio, fim, self.__catalogo.atual)
+                pessoa.adicionar_aluguel(aluguel)
+                return "catalogo_cliente"
             else:
                 self.erro = True
-                return "assinar"
+                return "catalogo_cliente"
         if event == "Cancelar":
             self.window.close()
             return "catalogo_cliente"
-        return "assinar"
+        return "alugar"

@@ -1,4 +1,5 @@
 import datetime
+from estado_alugados import EstadoAlugados
 
 from estado import Estado
 from pessoa import Pessoa
@@ -16,6 +17,8 @@ from estado_editar_filme import EstadoEditarFilme
 from estado_assinar import EstadoAssinar
 from estado_adicionar_filme import EstadoAdicionarFilme
 from estado_gerenciar_pessoas import EstadoGerenciarPessoas
+from estado_alugar import EstadoAlugar
+from estado_alugados import EstadoAlugados
 
 
 sg.theme("DarkTeal10")
@@ -40,17 +43,20 @@ registro_pessoas.adicionar(Pessoa("Alisson Fabra da Silva", "12214622969", "18/0
 estados = {"login": EstadoLogin(False, False, registro_pessoas),
            "cadastro_admin": EstadoCadastro(True, False, registro_pessoas),
            "cadastro_cliente": EstadoCadastro(False, False, registro_pessoas),
-           "catalogo_admin": EstadoCatalogo(True, True, catalogo),
-           "catalogo_assinante": EstadoCatalogo(False, True, catalogo),
-           "catalogo_cliente": EstadoCatalogo(False, False, catalogo),
+           "catalogo_admin": EstadoCatalogo(True, True, registro_pessoas, catalogo),
+           "catalogo_assinante": EstadoCatalogo(False, True, registro_pessoas, catalogo),
+           "catalogo_cliente": EstadoCatalogo(False, False, registro_pessoas, catalogo),
            "visualizar_filme_admin": EstadoVisualizarFilme(True, True, catalogo),
-           "visualizar_filme_cliente": EstadoVisualizarFilme(False, True, catalogo),
+           "visualizar_filme_assinante": EstadoVisualizarFilme(False, True, catalogo),
+           "visualizar_filme_cliente": EstadoVisualizarFilme(False, False, catalogo),
            "visualizar_pessoa": EstadoVisualizarPessoa(True, True, registro_pessoas),
            "editar_pessoa": EstadoEditarPessoa(True, True, registro_pessoas),
            "editar_filme": EstadoEditarFilme(True, True, catalogo),
            "assinar": EstadoAssinar(False, False, registro_pessoas),
            "adicionar_filme": EstadoAdicionarFilme(True, True, catalogo),
-           "lista_pessoas": EstadoGerenciarPessoas(True, True, registro_pessoas)}
+           "lista_pessoas": EstadoGerenciarPessoas(True, True, registro_pessoas),
+           "alugar": EstadoAlugar(False, False, registro_pessoas, catalogo),
+           "alugados": EstadoAlugados(False, False, registro_pessoas, catalogo)}
 
 estados["editar_filme"].filme = catalogo.consultar("Harry Potter 2")
 estados["editar_pessoa"].pessoa = registro_pessoas.consultar("107879469-31")
