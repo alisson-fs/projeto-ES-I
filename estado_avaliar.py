@@ -26,8 +26,8 @@ class EstadoAvaliar(Estado):
         if event == "Avaliar":
             self.window.close()
             if values["nota"]:
-                self.__catalogo.atual.soma_avaliacoes += values["nota"][0]
-                self.__catalogo.atual.n_avaliacoes += 1
+                nota = values["nota"][0]
+                self.__catalogo.avaliar(nota)
                 return "visualizar_filme_cliente"
             else:
                 self.erro = True

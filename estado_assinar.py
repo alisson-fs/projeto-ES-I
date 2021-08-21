@@ -2,7 +2,6 @@ from estado import Estado
 from cartao import Cartao
 from pessoa import Pessoa
 import PySimpleGUI as sg
-import datetime
 
 
 class EstadoAssinar(Estado):
@@ -42,9 +41,7 @@ class EstadoAssinar(Estado):
                 validade = str(values["mes"])+"/"+str(values["ano"])
                 cvv = values["cvv"]
                 cartao = Cartao(nome_cartao, num_cartao, validade, cvv)
-                pessoa.cartao = cartao
-                pessoa.assinante = True
-                pessoa.vencimento_assinatura = datetime.date.today()+datetime.timedelta(days=30)
+                pessoa.assinar(cartao)
                 return "catalogo_assinante"
             else:
                 self.erro = True

@@ -44,11 +44,10 @@ class EstadoAlugar(Estado):
                 validade = str(values["mes"])+"/"+str(values["ano"])
                 cvv = values["cvv"]
                 cartao = Cartao(nome_cartao, num_cartao, validade, cvv)
-                pessoa.cartao = cartao
                 inicio = datetime.date.today()
                 fim = datetime.date.today()+datetime.timedelta(days=7)
                 aluguel = Aluguel(inicio, fim, self.__catalogo.atual)
-                pessoa.adicionar_aluguel(aluguel)
+                pessoa.alugar(cartao, aluguel)
                 return "catalogo_cliente"
             else:
                 self.erro = True

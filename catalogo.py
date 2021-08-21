@@ -36,3 +36,7 @@ class Catalogo(Registro):
                 filme.duracao = duracao
                 filme.genero = genero
                 filme.classificacao = classificacao
+
+    def avaliar(self, nota):
+        self.atual.soma_avaliacoes += nota
+        self.atual.n_avaliacoes += 1

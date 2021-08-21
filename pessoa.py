@@ -1,4 +1,5 @@
 from cartao import Cartao
+import datetime
 
 
 class Pessoa:
@@ -105,3 +106,12 @@ class Pessoa:
             if aluguel.filme == filme:
                 alugado = True
         return alugado
+
+    def alugar(self, cartao, aluguel):
+        self.__cartao = cartao
+        self.adicionar_aluguel(aluguel)
+        
+    def assinar(self, cartao):
+        self.__cartao = cartao
+        self.__assinante = True
+        self.__vencimento_assinatura = datetime.date.today()+datetime.timedelta(days=30)
