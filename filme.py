@@ -1,12 +1,12 @@
 class Filme:
-    def __init__(self, titulo, id, duracao, genero, classificacao):
+    def __init__(self, titulo, id, duracao, genero, classificacao, n_avalliacoes=0, soma_avaliacoes=0):
         self.__titulo = titulo
         self.__id = id
         self.__duracao = duracao
         self.__genero = genero
         self.__classificacao = classificacao
-        self.__n_avaliacoes = 0
-        self.__soma_avaliacoes = 0
+        self.__n_avaliacoes = n_avalliacoes
+        self.__soma_avaliacoes = soma_avaliacoes
 
     @property
     def titulo(self):

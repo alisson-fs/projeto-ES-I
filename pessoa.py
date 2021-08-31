@@ -3,15 +3,15 @@ import datetime
 
 
 class Pessoa:
-    def __init__(self, nome, cpf, nascimento, senha, admin=False, assinante=False):
+    def __init__(self, nome, cpf, nascimento, senha, cartao, vencimento_assinatura=None, admin=False, assinante=False):
         self.__nome = nome
         self.__cpf = cpf
-        self.__nascimento =nascimento
+        self.__nascimento = nascimento
         self.__senha = senha
-        self.__cartao = Cartao(" -", " -", " -", " -")
+        self.__cartao = cartao
         self.__admin = admin
         self.__assinante = assinante
-        self.__vencimento_assinatura = None
+        self.__vencimento_assinatura = vencimento_assinatura
         self.__alugueis = []
 
     @property

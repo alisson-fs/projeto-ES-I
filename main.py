@@ -1,4 +1,5 @@
 import datetime
+import psycopg2
 from pessoa import Pessoa
 from filme import Filme
 from catalogo import Catalogo
@@ -21,22 +22,28 @@ from estado_avaliar import EstadoAvaliar
 
 sg.theme("DarkTeal10")
 
-catalogo = Catalogo()
-catalogo.adicionar(Filme("Senhor dos aneis", "1", "180min", "Aventura", "14"))
-catalogo.adicionar(Filme("Harry Potter 1", "2", "144min", "Aventura", "12"))
-catalogo.adicionar(Filme("Harry Potter 2", "3", "144min", "Aventura", "12"))
-catalogo.adicionar(Filme("Harry Potter 3", "4", "144min", "Aventura", "12"))
-catalogo.adicionar(Filme("Harry Potter 4", "5", "144min", "Aventura", "12"))
-catalogo.adicionar(Filme("Harry Potter 5", "6", "144min", "Aventura", "12"))
-catalogo.adicionar(Filme("Harry Potter 6", "7", "144min", "Aventura", "12"))
-catalogo.adicionar(Filme("Harry Potter 7", "8", "144min", "Aventura", "12"))
-catalogo.adicionar(Filme("Harry Potter 8", "9", "144min", "Aventura", "12"))
+connection = psycopg2.connect(user="postgres",
+							  password="postgres",
+							  host="192.168.0.35",
+							  port="5432",
+							  database="uflix")
 
-registro_pessoas = RegistroPessoas()
-registro_pessoas.adicionar(Pessoa("Admin", "000", "10/07/2021", "000", True, True))
-registro_pessoas.adicionar(Pessoa("Eduardo Betim", "10787946931", "10/05/2000", "123", False, True))
-registro_pessoas.consultar("10787946931").vencimento_assinatura = datetime.date.today()+datetime.timedelta(days=30)
-registro_pessoas.adicionar(Pessoa("Alisson Fabra da Silva", "12214622969", "18/09/2000", "321", False, False))
+catalogo = Catalogo(connection)
+# catalogo.adicionar(Filme("Senhor dos aneis", "1", "180min", "Aventura", "14"))
+# catalogo.adicionar(Filme("Harry Potter 1", "2", "144min", "Aventura", "12"))
+# catalogo.adicionar(Filme("Harry Potter 2", "3", "144min", "Aventura", "12"))
+# catalogo.adicionar(Filme("Harry Potter 3", "4", "144min", "Aventura", "12"))
+# catalogo.adicionar(Filme("Harry Potter 4", "5", "144min", "Aventura", "12"))
+# catalogo.adicionar(Filme("Harry Potter 5", "6", "144min", "Aventura", "12"))
+# catalogo.adicionar(Filme("Harry Potter 6", "7", "144min", "Aventura", "12"))
+# catalogo.adicionar(Filme("Harry Potter 7", "8", "144min", "Aventura", "12"))
+# catalogo.adicionar(Filme("Harry Potter 8", "9", "144min", "Aventura", "12"))
+
+registro_pessoas = RegistroPessoas(connection)
+# registro_pessoas.adicionar(Pessoa("Admin", "000", "10/07/2021", "000", True, True))
+# registro_pessoas.adicionar(Pessoa("Eduardo Betim", "10787946931", "10/05/2000", "123", False, True))
+# registro_pessoas.consultar("10787946931").vencimento_assinatura = datetime.date.today()+datetime.timedelta(days=30)
+# registro_pessoas.adicionar(Pessoa("Alisson Fabra da Silva", "12214622969", "18/09/2000", "321", False, False))
 
 estados = {"login": EstadoLogin(False, False, registro_pessoas),
            "cadastro_admin": EstadoCadastro(True, False, registro_pessoas),
