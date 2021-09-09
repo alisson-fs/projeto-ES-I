@@ -29,12 +29,20 @@ class EstadoEditarFilme(Estado):
     def ler_evento(self, event, values):
         if event == "Salvar":
             self.window.close()
-            titulo = values["titulo"]
-            id = values["id"]
-            duracao = values["duracao"]
-            genero = values["genero"]
-            classificacao = values["classificacao"]
-            self.__catalogo.atualizar(titulo, id, duracao, genero, classificacao)
+            self.__catalogo.atual.titulo = values["titulo"]
+            self.__catalogo.atual.id = values["id"]
+            self.__catalogo.atual.duracao = values["duracao"]
+            self.__catalogo.atual.genero = values["genero"]
+            self.__catalogo.atual.classificacao = values["classificacao"]
+            self.__catalogo.atual.n_avaliacoes = self.__catalogo.atual.n_avaliacoes
+            self.__catalogo.atual.soma_avaliacoes = self.__catalogo.atual.soma_avaliacoes
+            self.__catalogo.atualizar(self.__catalogo.atual.titulo,
+                                      self.__catalogo.atual.id,
+                                      self.__catalogo.atual.duracao,
+                                      self.__catalogo.atual.genero,
+                                      self.__catalogo.atual.classificacao,
+                                      self.__catalogo.atual.n_avaliacoes,
+                                      self.__catalogo.atual.soma_avaliacoes)
             return "visualizar_filme_admin"
 
         if event == "Cancelar":

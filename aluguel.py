@@ -1,8 +1,9 @@
 class Aluguel:
-    def __init__(self, inicio, fim, filme):
+    def __init__(self, inicio, fim, titulo, cpf):
         self.__inicio = inicio
         self.__fim = fim
-        self.__filme = filme
+        self.__titulo = titulo
+        self.__cpf = cpf
 
     @property
     def inicio(self):
@@ -13,8 +14,12 @@ class Aluguel:
         return self.__fim
     
     @property
-    def filme(self):
-        return self.__filme
+    def titulo(self):
+        return self.__titulo
+
+    @property
+    def cpf(self):
+        return self.__cpf
 
     @inicio.setter
     def inicio(self, inicio):
@@ -24,6 +29,10 @@ class Aluguel:
     def fim(self, fim):
         self.__fim = fim
 
-    @filme.setter
-    def filme(self, filme):
-        self.__filme = filme
+    @titulo.setter
+    def titulo(self, titulo):
+        self.__titulo = titulo
+
+    @cpf.setter
+    def cpf(self, cpf):
+        self.__cpf = cpf

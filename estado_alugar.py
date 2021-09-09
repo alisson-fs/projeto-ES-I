@@ -7,10 +7,11 @@ import datetime
 
 
 class EstadoAlugar(Estado):
-    def __init__(self, admin, assinante, registro_pessoas, catalogo):
+    def __init__(self, admin, assinante, registro_pessoas, catalogo, alugueis):
         super().__init__(admin, assinante)
         self.__registro_pessoas = registro_pessoas
         self.__catalogo = catalogo
+        self.__alugueis = alugueis
 
     def run(self):
         linha0 = [sg.Text("UFLIX", size=(30,1), font=("Helvetica",25))]
@@ -44,10 +45,11 @@ class EstadoAlugar(Estado):
                 validade = str(values["mes"])+"/"+str(values["ano"])
                 cvv = values["cvv"]
                 cartao = Cartao(nome_cartao, num_cartao, validade, cvv)
+                pessoa.cartao = cartao
                 inicio = datetime.date.today()
                 fim = datetime.date.today()+datetime.timedelta(days=7)
-                aluguel = Aluguel(inicio, fim, self.__catalogo.atual)
-                pessoa.alugar(cartao, aluguel)
+                aluguel = Aluguel(inicio, fim, self.__catalogo.atual.titulo, self.__registro_pessoas.atual.cpf)
+                self.__alugueis.adicionar(aluguel)
                 return "catalogo_cliente"
             else:
                 self.erro = True

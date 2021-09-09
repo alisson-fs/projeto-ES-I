@@ -36,7 +36,8 @@ class EstadoLogin(Estado):
                     if pessoa.admin:
                         return "catalogo_admin"
                     elif pessoa.assinante:
-                        if datetime.date.today() < pessoa.vencimento_assinatura:
+                        
+                        if datetime.date.today() < datetime.datetime.strptime(pessoa.vencimento_assinatura, '%Y-%m-%d').date():
                             return "catalogo_assinante"
                         else:
                             pessoa.assinante = False

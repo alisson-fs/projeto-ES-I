@@ -21,7 +21,7 @@ class EstadoVisualizarFilme(Estado):
         else:
             nota = self.__catalogo.atual.soma_avaliacoes/self.__catalogo.atual.n_avaliacoes
         n_notas = self.__catalogo.atual.n_avaliacoes
-        linha6 = [sg.Text(f"Avaliação: Nota {nota:.1f}/10 de {n_notas} avaliações.", size=(30,1), font=("Helvetica",12))]
+        linha6 = [sg.Text(f"Avaliação: Nota {nota:.1f}/10 de {n_notas} avaliações.", size=(40,1), font=("Helvetica",12))]
         if self.admin:
             linha7 = [sg.Button("Voltar"), sg.Button("Assistir"), sg.Button("Editar")]
         else:

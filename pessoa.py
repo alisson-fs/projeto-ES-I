@@ -1,18 +1,20 @@
+from aluguel import Aluguel
+from alugueis import Alugueis
 from cartao import Cartao
 import datetime
+import psycopg2
 
 
 class Pessoa:
-    def __init__(self, nome, cpf, nascimento, senha, cartao, vencimento_assinatura=None, admin=False, assinante=False):
+    def __init__(self, nome, cpf, nascimento, senha, vencimento_assinatura=None, admin=False, assinante=False):
         self.__nome = nome
         self.__cpf = cpf
         self.__nascimento = nascimento
         self.__senha = senha
-        self.__cartao = cartao
+        self.__cartao = None
         self.__admin = admin
         self.__assinante = assinante
         self.__vencimento_assinatura = vencimento_assinatura
-        self.__alugueis = []
 
     @property
     def nome(self):
@@ -46,10 +48,6 @@ class Pessoa:
     def vencimento_assinatura(self):
         return self.__vencimento_assinatura
 
-    @property
-    def alugueis(self):
-        return self.__alugueis
-
     @nome.setter
     def nome(self, nome):
         self.__nome = nome
@@ -82,35 +80,6 @@ class Pessoa:
     def vencimento_assinatura(self, vencimento_assinatura):
         self.__vencimento_assinatura = vencimento_assinatura
 
-    @alugueis.setter
-    def alugueis(self, alugueis):
-        self.__alugueis = alugueis
-
-    def adicionar_aluguel(self, aluguel):
-        self.__alugueis.append(aluguel)
-
-    def retirar_aluguel(self, filme):
-        for aluguel in self.__alugueis:
-            if aluguel.filme == filme:
-                self.__alugueis.remove(aluguel)
-
-    def gerar_lista_alugados(self):
-        lista = []
-        for aluguel in self.__alugueis:
-            lista.append(aluguel.filme.titulo)
-        return lista
-
-    def verifica_alugado(self, filme):
-        alugado = False
-        for aluguel in self.__alugueis:
-            if aluguel.filme == filme:
-                alugado = True
-        return alugado
-
-    def alugar(self, cartao, aluguel):
-        self.__cartao = cartao
-        self.adicionar_aluguel(aluguel)
-        
     def assinar(self, cartao):
         self.__cartao = cartao
         self.__assinante = True

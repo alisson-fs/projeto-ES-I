@@ -3,15 +3,16 @@ import PySimpleGUI as sg
 
 
 class EstadoAlugados(Estado):
-    def __init__(self, admin, assinante, registro_pessoas, catalogo):
+    def __init__(self, admin, assinante, registro_pessoas, catalogo, alugueis):
         super().__init__(admin, assinante)
         self.__registro_pessoas = registro_pessoas
         self.__catalogo = catalogo
+        self.__alugueis = alugueis
 
     def run(self):
         linha0 = [sg.Text("UFLIX", size=(30,1), font=("Helvetica",25))]
         linha1 = [sg.Text("Filmes alugados:", size=(30,1), font=("Helvetica",15))]
-        linha2 = [sg.Listbox(values=self.__registro_pessoas.atual.gerar_lista_alugados(), size=(30, 6), key="filme")]
+        linha2 = [sg.Listbox(values=self.__alugueis.gerar_lista(self.__registro_pessoas.atual.cpf), size=(30, 6), key="filme")]
         linha3 = [sg.Text("ERRO: Selecione uma opção.", size=(30,1), font=("Helvetica",12))]     
         linha4 = [sg.Button("Catálogo"), sg.Button("Visualizar")]
         if self.erro:

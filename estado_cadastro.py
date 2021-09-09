@@ -55,7 +55,8 @@ class EstadoCadastro(Estado):
                 else:
                     admin = False
                 senha = senha1
-                pessoa = Pessoa(nome, cpf, nascimento, senha, admin)
+                vencimento_assinatura = "1900-01-01"
+                pessoa = Pessoa(nome, cpf, nascimento, senha, vencimento_assinatura, admin)
                 self.__registro_pessoas.adicionar(pessoa)
                 return "login"
             else:

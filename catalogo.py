@@ -17,17 +17,17 @@ class Catalogo(Registro):
 
     def remover(self, titulo):
         cursor = self.connection.cursor()
-        query = '''DELETE FROM CATALOGO WHERE TITULO=''' + str(titulo)
+        query = '''DELETE FROM CATALOGO WHERE TITULO=\'''' + str(titulo) + '''\''''
         cursor.execute(query)
         self.connection.commit()
 
     def consultar(self, titulo):
         cursor = self.connection.cursor()
-        consulta = '''SELECT (TITULO,FILME_ID,DURACAO,GENERO,CLASSIFICACAO,N_AVALIACOES,SOMA_AVALIACOES) FROM CATALOGO WHERE TITULO=''' + str(titulo)
+        consulta = '''SELECT TITULO,FILME_ID,DURACAO,GENERO,CLASSIFICACAO,N_AVALIACOES,SOMA_AVALIACOES FROM CATALOGO WHERE TITULO=\'''' + titulo + '''\''''
         cursor.execute(consulta)
         registro = cursor.fetchone()
         if registro != None:
-            filme = Filme(registro[0], registro[1], registro[2], registro[3], registro[4], registro[5], registro[6])
+            filme = Filme(registro[0], registro[1], registro[2], registro[3], registro[4], float(registro[5]), float(registro[6]))
             return filme
         else:
             return None
@@ -37,7 +37,7 @@ class Catalogo(Registro):
         consulta = '''SELECT (TITULO) FROM CATALOGO'''
         cursor = self.connection.cursor()
         cursor.execute(consulta)
-        registro = cursor.fetchone()
+        registro = cursor.fetchall()
         for filme in registro:
             lista.append(filme[0])
         return lista

@@ -1,9 +1,7 @@
-import datetime
 import psycopg2
-from pessoa import Pessoa
-from filme import Filme
 from catalogo import Catalogo
 from registro_pessoas import RegistroPessoas
+from alugueis import Alugueis
 import PySimpleGUI as sg
 from estado_login import EstadoLogin
 from estado_cadastro import EstadoCadastro
@@ -24,7 +22,7 @@ sg.theme("DarkTeal10")
 
 connection = psycopg2.connect(user="postgres",
 							  password="postgres",
-							  host="192.168.0.35",
+							  host="localhost",
 							  port="5432",
 							  database="uflix")
 
@@ -44,13 +42,14 @@ registro_pessoas = RegistroPessoas(connection)
 # registro_pessoas.adicionar(Pessoa("Eduardo Betim", "10787946931", "10/05/2000", "123", False, True))
 # registro_pessoas.consultar("10787946931").vencimento_assinatura = datetime.date.today()+datetime.timedelta(days=30)
 # registro_pessoas.adicionar(Pessoa("Alisson Fabra da Silva", "12214622969", "18/09/2000", "321", False, False))
+alugueis = Alugueis(connection)
 
 estados = {"login": EstadoLogin(False, False, registro_pessoas),
            "cadastro_admin": EstadoCadastro(True, False, registro_pessoas),
            "cadastro_cliente": EstadoCadastro(False, False, registro_pessoas),
-           "catalogo_admin": EstadoCatalogo(True, True, registro_pessoas, catalogo),
-           "catalogo_assinante": EstadoCatalogo(False, True, registro_pessoas, catalogo),
-           "catalogo_cliente": EstadoCatalogo(False, False, registro_pessoas, catalogo),
+           "catalogo_admin": EstadoCatalogo(True, True, registro_pessoas, catalogo, alugueis),
+           "catalogo_assinante": EstadoCatalogo(False, True, registro_pessoas, catalogo, alugueis),
+           "catalogo_cliente": EstadoCatalogo(False, False, registro_pessoas, catalogo, alugueis),
            "visualizar_filme_admin": EstadoVisualizarFilme(True, True, catalogo),
            "visualizar_filme_assinante": EstadoVisualizarFilme(False, True, catalogo),
            "visualizar_filme_cliente": EstadoVisualizarFilme(False, False, catalogo),
@@ -60,12 +59,12 @@ estados = {"login": EstadoLogin(False, False, registro_pessoas),
            "assinar": EstadoAssinar(False, False, registro_pessoas),
            "adicionar_filme": EstadoAdicionarFilme(True, True, catalogo),
            "lista_pessoas": EstadoGerenciarPessoas(True, True, registro_pessoas),
-           "alugar": EstadoAlugar(False, False, registro_pessoas, catalogo),
-           "alugados": EstadoAlugados(False, False, registro_pessoas, catalogo),
+           "alugar": EstadoAlugar(False, False, registro_pessoas, catalogo, alugueis),
+           "alugados": EstadoAlugados(False, False, registro_pessoas, catalogo, alugueis),
            "avaliar": EstadoAvaliar(False, False, catalogo)}
 
-estados["editar_filme"].filme = catalogo.consultar("Harry Potter 2")
-estados["editar_pessoa"].pessoa = registro_pessoas.consultar("107879469-31")
+# estados["editar_filme"].filme = catalogo.consultar("Harry Potter 2")
+# estados["editar_pessoa"].pessoa = registro_pessoas.consultar("107879469-31")
 
 estado = "login"
 while True:

@@ -3,10 +3,11 @@ import PySimpleGUI as sg
 
 
 class EstadoCatalogo(Estado):
-    def __init__(self, admin, assinante, registro_pessoas, catalogo):
+    def __init__(self, admin, assinante, registro_pessoas, catalogo, alugueis):
         super().__init__(admin, assinante)
         self.__registro_pessoas = registro_pessoas
         self.__catalogo = catalogo
+        self.__alugueis = alugueis
         self.__mensagem_erro = ""
 
     def run(self):
@@ -66,7 +67,7 @@ class EstadoCatalogo(Estado):
             if values["filme"]:
                 filme = self.__catalogo.consultar(values["filme"][0])
                 self.__catalogo.atual = filme
-                if self.__registro_pessoas.atual.verifica_alugado(filme):
+                if self.__alugueis.verifica_alugado(filme, self.__registro_pessoas.atual):
                     self.erro = True
                     self.__mensagem_erro = "ERRO: Filme já alugado."
                 else:
