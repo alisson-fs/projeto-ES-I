@@ -4,10 +4,11 @@ import PySimpleGUI as sg
 
 
 class EstadoVisualizarFilme(Estado):
-    def __init__(self, admin, assinante, catalogo):
+    def __init__(self, admin, assinante, catalogo, comentarios):
         super().__init__(admin, assinante)
         self.__catalogo = catalogo
         self.__catalogo.atual = Filme(" -", " -", " -", " -", " -")
+        self.__comentarios = comentarios
 
     def run(self):
         linha0 = [sg.Text("UFLIX", size=(30,1), font=("Helvetica",25))]
@@ -23,9 +24,9 @@ class EstadoVisualizarFilme(Estado):
         n_notas = self.__catalogo.atual.n_avaliacoes
         linha6 = [sg.Text(f"Avaliação: Nota {nota:.1f}/10 de {n_notas} avaliações.", size=(40,1), font=("Helvetica",12))]
         if self.admin:
-            linha7 = [sg.Button("Voltar"), sg.Button("Assistir"), sg.Button("Editar")]
+            linha7 = [sg.Button("Voltar"), sg.Button("Assistir"), sg.Button("Comentarios"), sg.Button("Editar")]
         else:
-            linha7 = [sg.Button("Voltar"), sg.Button("Assistir"), sg.Button("Avaliar")]
+            linha7 = [sg.Button("Voltar"), sg.Button("Assistir"), sg.Button("Comentarios"), sg.Button("Avaliar")]
         self.container = [linha0, linha1, linha2, linha3, linha4, linha5, linha6, linha7]
         self.window = sg.Window("UFLIX", self.container, font=("Helvetica", 14))
  
@@ -50,6 +51,9 @@ class EstadoVisualizarFilme(Estado):
         if event == "Avaliar":
             self.window.close()
             return "avaliar"
+        if event == "Comentarios":
+            self.window.close()
+            return "comentarios"
         if self.admin:
             return "visualizar_filme_admin"
         else:
