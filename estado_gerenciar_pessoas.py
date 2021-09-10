@@ -11,15 +11,15 @@ class EstadoGerenciarPessoas(Estado):
 
     def run(self):
         linha0 = [sg.Text("UFLIX", size=(30,1), font=("Helvetica",25))]
-        linha0 = [sg.Text("Buscar clientes:", size=(30,1), font=("Helvetica",15))]
-        linha1 = [sg.Text("CPF:", size=(30,1), font=("Helvetica",12))]
-        linha2 = [sg.InputText("", key="pessoa")]
-        linha3 = [sg.Text("ERRO: Cliente inválido!", size=(30,1), font=("Helvetica",12))]
-        linha4 = [sg.Button("Voltar"), sg.Button("Visualizar"), sg.Button("Adicionar cliente"), sg.Button("Remover cliente")]
+        linha1 = [sg.Text("Buscar clientes:", size=(30,1), font=("Helvetica",15))]
+        linha2 = [sg.Text("CPF:", size=(30,1), font=("Helvetica",12))]
+        linha3 = [sg.InputText("", key="pessoa")]
+        linha4 = [sg.Text("ERRO: Cliente inválido!", size=(30,1), font=("Helvetica",12))]
+        linha5 = [sg.Button("Voltar"), sg.Button("Visualizar"), sg.Button("Adicionar cliente"), sg.Button("Remover cliente")]
         if self.erro:
-            self.container = [linha0, linha1, linha2, linha3, linha4]
+            self.container = [linha0, linha1, linha2, linha3, linha4, linha5]
         else:
-            self.container = [linha0, linha1, linha2, linha4]
+            self.container = [linha0, linha1, linha2, linha5]
         self.window = sg.Window("UFLIX", self.container, font=("Helvetica", 14))
         self.erro = False
 

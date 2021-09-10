@@ -16,9 +16,14 @@ class EstadoCatalogo(Estado):
         linha2 = [sg.Listbox(values=self.__catalogo.gerar_lista(), size=(30, 6), key="filme")]
         linha3 = [sg.Text(self.__mensagem_erro, size=(30,1), font=("Helvetica",12))]
         if self.admin:      
-            linha4 = [sg.Button("Sair"), sg.Button("Visualizar"), sg.Button("Adicionar filme"), sg.Button("Remover filme"), sg.Button("Gerenciar cadastros")]
+            linha4 = [sg.Button("Sair"),
+                      sg.Button("Visualizar"),
+                      sg.Button("Adicionar filme"),
+                      sg.Button("Remover filme"),
+                      sg.Button("Gerenciar cadastros"),
+                      sg.Button("Sugestões")]
         elif self.assinante:
-            linha4 = [sg.Button("Sair"), sg.Button("Visualizar")]
+            linha4 = [sg.Button("Sair"), sg.Button("Visualizar"), sg.Button("Sugerir Filme")]
         else:
             linha4 = [sg.Button("Sair"), sg.Button("Alugar"), sg.Button("Realizar assinatura"), sg.Button("Alugados")]
         if self.erro:
@@ -78,6 +83,12 @@ class EstadoCatalogo(Estado):
         if event == "Alugados":
             self.window.close()
             return "alugados"
+        if event == "Sugestões":
+            self.window.close()
+            return "sugestoes"
+        if event == "Sugerir Filme":
+            self.window.close()
+            return "sugerir"
         if self.admin:
             return "catalogo_admin"
         elif self.assinante:

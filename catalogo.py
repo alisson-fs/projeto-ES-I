@@ -34,7 +34,7 @@ class Catalogo(Registro):
 
     def gerar_lista(self):
         lista = []
-        consulta = '''SELECT (TITULO) FROM CATALOGO'''
+        consulta = '''SELECT TITULO FROM CATALOGO'''
         cursor = self.connection.cursor()
         cursor.execute(consulta)
         registro = cursor.fetchall()
