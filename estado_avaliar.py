@@ -28,10 +28,10 @@ class EstadoAvaliar(Estado):
             if values["nota"]:
                 nota = values["nota"][0]
                 self.__catalogo.avaliar(nota)
-                return "visualizar_filme_cliente"
+                return "visualizar_filme"
             else:
                 self.erro = True
         if event == "Cancelar":
             self.window.close()
-            return "visualizar_filme_cliente"
+            return "visualizar_filme"
         return "avaliar"

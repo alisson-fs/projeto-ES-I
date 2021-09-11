@@ -23,7 +23,7 @@ class EstadoSugestoes(Estado):
     def ler_evento(self, event, values):
         if event == "Voltar":
             self.window.close()
-            return "catalogo_admin"
+            return "catalogo"
         if event == "Remover":
             self.window.close()
             if values["sugestao"]:

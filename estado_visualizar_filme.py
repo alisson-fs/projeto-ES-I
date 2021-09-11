@@ -35,28 +35,17 @@ class EstadoVisualizarFilme(Estado):
     def ler_evento(self, event, values):
         if event == "Voltar":
             self.window.close()
-            if self.__registro_pessoas.atual.admin:
-                return "catalogo_admin"
-            elif self.__registro_pessoas.atual.assinante:
-                return "catalogo_assinante"
-            else:
-                return "catalogo_cliente"
+            return "catalogo"
         if event == "Editar":
             self.window.close()
             return "editar_filme"
         if event == "Assistir":
             self.window.close()
-            if self.__registro_pessoas.atual.admin:
-                return "visualizar_filme_admin"
-            else:
-                return "visualizar_filme_cliente"
+            return "visualizar_filme"
         if event == "Avaliar":
             self.window.close()
             return "avaliar"
         if event == "Comentarios":
             self.window.close()
             return "comentarios"
-        if self.__registro_pessoas.atual.admin:
-            return "visualizar_filme_admin"
-        else:
-            return "visualizar_filme_cliente"
+        return "visualizar_filme"

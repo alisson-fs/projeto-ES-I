@@ -27,24 +27,16 @@ class EstadoLogin(Estado):
     def ler_evento(self, event, values):
         if event == "Cadastrar":
             self.window.close()
-            return "cadastro_cliente"
+            return "cadastro"
         if event == "Entrar":
             pessoa = self.__registro_pessoas.consultar(values["cpf"])
             self.window.close()
             if isinstance(pessoa, Pessoa):
                 if pessoa.cpf == values["cpf"] and pessoa.senha == values["senha"]:
                     self.__registro_pessoas.atual = pessoa
-                    if pessoa.admin:
-                        return "catalogo_admin"
-                    elif pessoa.assinante:
-                        
-                        if datetime.date.today() < datetime.datetime.strptime(pessoa.vencimento_assinatura, '%Y-%m-%d').date():
-                            return "catalogo_assinante"
-                        else:
-                            pessoa.assinante = False
-                            return "catalogo_cliente"
-                    else:
-                        return "catalogo_cliente"
+                    if pessoa.assinante and datetime.date.today() > datetime.datetime.strptime(pessoa.vencimento_assinatura, '%Y-%m-%d').date():
+                        pessoa.assinante = False
+                    return "catalogo"
                 else:
                     self.erro = True
                     return "login"

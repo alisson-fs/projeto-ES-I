@@ -21,14 +21,9 @@ from estado_comentar import EstadoComentar
 sg.theme("DarkTeal10")
 
 estados = {"login": EstadoLogin(),
-           "cadastro_admin": EstadoCadastro(),
-           "cadastro_cliente": EstadoCadastro(),
-           "catalogo_admin": EstadoCatalogo(),
-           "catalogo_assinante": EstadoCatalogo(),
-           "catalogo_cliente": EstadoCatalogo(),
-           "visualizar_filme_admin": EstadoVisualizarFilme(),
-           "visualizar_filme_assinante": EstadoVisualizarFilme(),
-           "visualizar_filme_cliente": EstadoVisualizarFilme(),
+           "cadastro": EstadoCadastro(),
+           "catalogo": EstadoCatalogo(),
+           "visualizar_filme": EstadoVisualizarFilme(),
            "visualizar_pessoa": EstadoVisualizarPessoa(),
            "editar_pessoa": EstadoEditarPessoa(),
            "editar_filme": EstadoEditarFilme(),

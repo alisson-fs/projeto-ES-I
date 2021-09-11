@@ -15,16 +15,16 @@ class Comentarios(Registro):
 
     def remover(self, titulo):
         cursor = self.connection.cursor()
-        query = '''DELETE FROM COMENTARIOS WHERE SUGESTAO=\'''' + titulo + '''\''''
+        query = '''DELETE FROM COMENTARIOS WHERE TITULO=\'''' + titulo + '''\''''
         cursor.execute(query)
         self.connection.commit()
 
     def consultar(self):
         pass
 
-    def gerar_lista(self):
+    def gerar_lista(self, titulo):
         lista = []
-        consulta = '''SELECT COMENTARIO FROM COMENTARIOS'''
+        consulta = '''SELECT COMENTARIO FROM COMENTARIOS WHERE TITULO=\'''' + titulo + '''\''''
         cursor = self.connection.cursor()
         cursor.execute(consulta)
         registro = cursor.fetchall()

@@ -45,10 +45,7 @@ class EstadoCatalogo(Estado):
             if values["filme"]:
                 filme = self.__catalogo.consultar(values["filme"][0])
                 self.__catalogo.atual = filme
-                if self.__registro_pessoas.atual.admin:
-                    return "visualizar_filme_admin"
-                else:
-                    return "visualizar_filme_assinante"
+                return "visualizar_filme"
             else:
                 self.erro = True
                 self.__mensagem_erro = "ERRO: Selecione uma opção."
@@ -60,7 +57,7 @@ class EstadoCatalogo(Estado):
             if values["filme"]:
                 filme = self.__catalogo.consultar(values["filme"][0])
                 self.__catalogo.remover(filme.titulo)
-                return "catalogo_admin"
+                return "catalogo"
             else:
                 self.erro = True
                 self.__mensagem_erro = "ERRO: Selecione uma opção."
@@ -92,9 +89,4 @@ class EstadoCatalogo(Estado):
         if event == "Sugerir Filme":
             self.window.close()
             return "sugerir"
-        if self.__registro_pessoas.atual.admin:
-            return "catalogo_admin"
-        elif self.__registro_pessoas.atual.assinante:
-            return "catalogo_assinante"
-        else:
-            return "catalogo_cliente"
+        return "catalogo"

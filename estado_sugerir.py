@@ -26,13 +26,13 @@ class EstadoSugerir(Estado):
     def ler_evento(self, event, values):
         if event == "Voltar":
             self.window.close()
-            return "catalogo_assinante"
+            return "catalogo"
         if event == "Sugerir":
             self.window.close()
             if values["sugestao"] and len(values["sugestao"]) <= 60:
                 sugestao = values["sugestao"]
                 self.__sugestoes.adicionar(Sugestao(sugestao))
-                return "catalogo_assinante"
+                return "catalogo"
             else:
                 self.erro = True
                 return "sugerir"

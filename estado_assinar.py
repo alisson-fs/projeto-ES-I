@@ -52,11 +52,12 @@ class EstadoAssinar(Estado):
                                                   pessoa.vencimento_assinatura,
                                                   str(pessoa.admin),
                                                   str(pessoa.assinante))
-                return "catalogo_assinante"
+                self.__registro_pessoas.atual = pessoa
+                return "catalogo"
             else:
                 self.erro = True
                 return "assinar"
         if event == "Cancelar":
             self.window.close()
-            return "catalogo_cliente"
+            return "catalogo"
         return "assinar"

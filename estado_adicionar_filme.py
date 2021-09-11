@@ -45,8 +45,8 @@ class EstadoAdicionarFilme(Estado):
                 classificacao = values["classificacao"]
                 filme = Filme(titulo, id, duracao, genero, classificacao)
                 self.__catalogo.adicionar(filme)
-                return "catalogo_admin"
+                return "catalogo"
         if event == "Cancelar":
             self.window.close()
-            return "catalogo_admin"
-        return "catalogo_admin"
+            return "catalogo"
+        return "catalogo"

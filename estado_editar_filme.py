@@ -44,9 +44,9 @@ class EstadoEditarFilme(Estado):
                                       self.__catalogo.atual.classificacao,
                                       self.__catalogo.atual.n_avaliacoes,
                                       self.__catalogo.atual.soma_avaliacoes)
-            return "visualizar_filme_admin"
+            return "visualizar_filme"
 
         if event == "Cancelar":
             self.window.close()
-            return "visualizar_filme_admin"
+            return "visualizar_filme"
         return "editar_filme"

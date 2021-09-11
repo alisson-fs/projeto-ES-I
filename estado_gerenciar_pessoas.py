@@ -28,7 +28,7 @@ class EstadoGerenciarPessoas(Estado):
         pessoa = self.__registro_pessoas.consultar(values["pessoa"])
         if event == "Voltar":
             self.window.close()
-            return "catalogo_admin"
+            return "catalogo"
         if event == "Visualizar":
             self.window.close()
             if pessoa != None:
@@ -38,7 +38,7 @@ class EstadoGerenciarPessoas(Estado):
                 self.erro = True
         if event == "Adicionar cliente":
             self.window.close()
-            return "cadastro_admin"
+            return "cadastro"
         if event == "Remover cliente":
             self.window.close()
             if pessoa != None:

@@ -37,6 +37,7 @@ class EstadoAlugar(Estado):
         if self.erro:
             self.container.insert(3, linha3)
         self.window = sg.Window("UFLIX", self.container, font=("Helvetica", 14))
+        self.erro = False
 
     def ler_evento(self, event, values):
         if event == "Alugar":
@@ -53,11 +54,10 @@ class EstadoAlugar(Estado):
                 fim = datetime.date.today()+datetime.timedelta(days=7)
                 aluguel = Aluguel(inicio, fim, self.__catalogo.atual.titulo, self.__registro_pessoas.atual.cpf)
                 self.__alugueis.adicionar(aluguel)
-                return "catalogo_cliente"
+                return "catalogo"
             else:
                 self.erro = True
-                return "catalogo_cliente"
         if event == "Cancelar":
             self.window.close()
-            return "catalogo_cliente"
+            return "catalogo"
         return "alugar"

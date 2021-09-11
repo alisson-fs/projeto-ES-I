@@ -58,20 +58,17 @@ class EstadoCadastro(Estado):
                 vencimento_assinatura = "1900-01-01"
                 pessoa = Pessoa(nome, cpf, nascimento, senha, vencimento_assinatura, admin)
                 self.__registro_pessoas.adicionar(pessoa)
-                return "login"
+                if self.__registro_pessoas.atual.admin:
+                    return "lista_pessoas"
+                else:
+                    return "login"
             else:
                 self.erro = True
-                if self.__registro_pessoas.atual.admin:
-                    return "cadastro_admin"
-                else:
-                    return "cadastro_cliente"
+                return "cadastro"
         if event == "Cancelar":
             self.window.close()
             if self.__registro_pessoas.atual.admin:
                 return "lista_pessoas"
             else:
                 return "login"
-        if self.__registro_pessoas.atual.admin:
-            return "cadastro_admin"
-        else:
-            return "cadastro_cliente"
+        return "cadastro"
