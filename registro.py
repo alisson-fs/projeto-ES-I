@@ -11,16 +11,8 @@ class Registro(metaclass=Singleton):
         self.__atual = None
 
     @property
-    def connection(self):
-        return self.__connection
-
-    @property
     def atual(self):
         return self.__atual
-
-    @connection.setter
-    def connection(self, connection):
-        self.__connection = connection
 
     @atual.setter
     def atual(self, atual):

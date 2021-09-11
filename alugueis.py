@@ -42,7 +42,7 @@ class Alugueis(Registro):
                 lista.append(aluguel[0])
         return lista
 
-    def atualizar(self, nome, cpf, nascimento, admin, assinante):
+    def atualizar(self):
         pass
 
     def verifica_alugado(self, filme, pessoa):
