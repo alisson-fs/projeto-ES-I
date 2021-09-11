@@ -1,9 +1,3 @@
-import psycopg2
-from catalogo import Catalogo
-from registro_pessoas import RegistroPessoas
-from alugueis import Alugueis
-from sugestoes import Sugestoes
-from comentarios import Comentarios
 import PySimpleGUI as sg
 from estado_login import EstadoLogin
 from estado_cadastro import EstadoCadastro
@@ -26,40 +20,28 @@ from estado_comentar import EstadoComentar
 
 sg.theme("DarkTeal10")
 
-connection = psycopg2.connect(user="postgres",
-							  password="postgres",
-							  host="localhost",
-							  port="5432",
-							  database="uflix")
-
-catalogo = Catalogo(connection)
-registro_pessoas = RegistroPessoas(connection)
-alugueis = Alugueis(connection)
-sugestoes = Sugestoes(connection)
-comentarios = Comentarios(connection)
-
-estados = {"login": EstadoLogin(False, False, registro_pessoas),
-           "cadastro_admin": EstadoCadastro(True, False, registro_pessoas),
-           "cadastro_cliente": EstadoCadastro(False, False, registro_pessoas),
-           "catalogo_admin": EstadoCatalogo(True, True, registro_pessoas, catalogo, alugueis),
-           "catalogo_assinante": EstadoCatalogo(False, True, registro_pessoas, catalogo, alugueis),
-           "catalogo_cliente": EstadoCatalogo(False, False, registro_pessoas, catalogo, alugueis),
-           "visualizar_filme_admin": EstadoVisualizarFilme(True, True, catalogo, comentarios),
-           "visualizar_filme_assinante": EstadoVisualizarFilme(False, True, catalogo, comentarios),
-           "visualizar_filme_cliente": EstadoVisualizarFilme(False, False, catalogo, comentarios),
-           "visualizar_pessoa": EstadoVisualizarPessoa(True, True, registro_pessoas),
-           "editar_pessoa": EstadoEditarPessoa(True, True, registro_pessoas),
-           "editar_filme": EstadoEditarFilme(True, True, catalogo),
-           "assinar": EstadoAssinar(False, False, registro_pessoas),
-           "adicionar_filme": EstadoAdicionarFilme(True, True, catalogo),
-           "lista_pessoas": EstadoGerenciarPessoas(True, True, registro_pessoas),
-           "alugar": EstadoAlugar(False, False, registro_pessoas, catalogo, alugueis),
-           "alugados": EstadoAlugados(False, False, registro_pessoas, catalogo, alugueis),
-           "avaliar": EstadoAvaliar(False, False, catalogo),
-           "sugerir": EstadoSugerir(False, True, sugestoes),
-           "sugestoes": EstadoSugestoes(True, False, sugestoes),
-           "comentarios": EstadoComentarios(True, True, registro_pessoas, comentarios),
-           "comentar": EstadoComentar(True,True, catalogo, comentarios)}
+estados = {"login": EstadoLogin(),
+           "cadastro_admin": EstadoCadastro(),
+           "cadastro_cliente": EstadoCadastro(),
+           "catalogo_admin": EstadoCatalogo(),
+           "catalogo_assinante": EstadoCatalogo(),
+           "catalogo_cliente": EstadoCatalogo(),
+           "visualizar_filme_admin": EstadoVisualizarFilme(),
+           "visualizar_filme_assinante": EstadoVisualizarFilme(),
+           "visualizar_filme_cliente": EstadoVisualizarFilme(),
+           "visualizar_pessoa": EstadoVisualizarPessoa(),
+           "editar_pessoa": EstadoEditarPessoa(),
+           "editar_filme": EstadoEditarFilme(),
+           "assinar": EstadoAssinar(),
+           "adicionar_filme": EstadoAdicionarFilme(),
+           "lista_pessoas": EstadoGerenciarPessoas(),
+           "alugar": EstadoAlugar(),
+           "alugados": EstadoAlugados(),
+           "avaliar": EstadoAvaliar(),
+           "sugerir": EstadoSugerir(),
+           "sugestoes": EstadoSugestoes(),
+           "comentarios": EstadoComentarios(),
+           "comentar": EstadoComentar()}
 
 estado = "login"
 while True:

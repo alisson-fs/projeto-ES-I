@@ -1,13 +1,15 @@
 from comentario import Comentario
 from estado import Estado
+from catalogo import Catalogo
+from comentarios import Comentarios
 import PySimpleGUI as sg
 
 
 class EstadoComentar(Estado):
-    def __init__(self, admin, assinante, catalogo, comentarios):
-        super().__init__(admin, assinante)
-        self.__catalogo = catalogo
-        self.__comentarios = comentarios
+    def __init__(self):
+        super().__init__()
+        self.__catalogo = Catalogo()
+        self.__comentarios = Comentarios()
 
     def run(self):
         linha0 = [sg.Text("UFLIX", size=(30,1), font=("Helvetica",25))]

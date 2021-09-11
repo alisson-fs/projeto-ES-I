@@ -1,14 +1,16 @@
 from estado import Estado
 from filme import Filme
 import PySimpleGUI as sg
+from catalogo import Catalogo
+from registro_pessoas import RegistroPessoas
 
 
 class EstadoVisualizarFilme(Estado):
-    def __init__(self, admin, assinante, catalogo, comentarios):
-        super().__init__(admin, assinante)
-        self.__catalogo = catalogo
+    def __init__(self):
+        super().__init__()
+        self.__catalogo = Catalogo()
         self.__catalogo.atual = Filme(" -", " -", " -", " -", " -")
-        self.__comentarios = comentarios
+        self.__registro_pessoas = RegistroPessoas()
 
     def run(self):
         linha0 = [sg.Text("UFLIX", size=(30,1), font=("Helvetica",25))]
@@ -23,7 +25,7 @@ class EstadoVisualizarFilme(Estado):
             nota = self.__catalogo.atual.soma_avaliacoes/self.__catalogo.atual.n_avaliacoes
         n_notas = self.__catalogo.atual.n_avaliacoes
         linha6 = [sg.Text(f"Avaliação: Nota {nota:.1f}/10 de {n_notas} avaliações.", size=(40,1), font=("Helvetica",12))]
-        if self.admin:
+        if self.__registro_pessoas.atual.admin:
             linha7 = [sg.Button("Voltar"), sg.Button("Assistir"), sg.Button("Comentarios"), sg.Button("Editar")]
         else:
             linha7 = [sg.Button("Voltar"), sg.Button("Assistir"), sg.Button("Comentarios"), sg.Button("Avaliar")]
@@ -33,9 +35,9 @@ class EstadoVisualizarFilme(Estado):
     def ler_evento(self, event, values):
         if event == "Voltar":
             self.window.close()
-            if self.admin:
+            if self.__registro_pessoas.atual.admin:
                 return "catalogo_admin"
-            elif self.assinante:
+            elif self.__registro_pessoas.atual.assinante:
                 return "catalogo_assinante"
             else:
                 return "catalogo_cliente"
@@ -44,7 +46,7 @@ class EstadoVisualizarFilme(Estado):
             return "editar_filme"
         if event == "Assistir":
             self.window.close()
-            if self.admin:
+            if self.__registro_pessoas.atual.admin:
                 return "visualizar_filme_admin"
             else:
                 return "visualizar_filme_cliente"
@@ -54,7 +56,7 @@ class EstadoVisualizarFilme(Estado):
         if event == "Comentarios":
             self.window.close()
             return "comentarios"
-        if self.admin:
+        if self.__registro_pessoas.atual.admin:
             return "visualizar_filme_admin"
         else:
             return "visualizar_filme_cliente"

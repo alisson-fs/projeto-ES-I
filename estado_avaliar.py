@@ -1,12 +1,12 @@
 from estado import Estado
-from filme import Filme
+from catalogo import Catalogo
 import PySimpleGUI as sg
 
 
 class EstadoAvaliar(Estado):
-    def __init__(self, admin, assinante, catalogo):
-        super().__init__(admin, assinante)
-        self.__catalogo = catalogo
+    def __init__(self):
+        super().__init__()
+        self.__catalogo = Catalogo()
 
     def run(self):
         linha0 = [sg.Text("UFLIX", size=(30,1), font=("Helvetica", 25))]

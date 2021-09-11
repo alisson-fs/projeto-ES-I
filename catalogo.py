@@ -4,8 +4,8 @@ from registro import Registro
 
 
 class Catalogo(Registro):
-    def __init__(self, connection):
-        super().__init__(connection)
+    def __init__(self):
+        super().__init__()
         self.atual = Filme(" -", " -", " -", " -", " -")
 
     def adicionar(self, filme):

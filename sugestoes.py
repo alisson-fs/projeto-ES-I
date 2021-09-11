@@ -3,8 +3,8 @@ from registro import Registro
 
 
 class Sugestoes(Registro):
-    def __init__(self, connection):
-        super().__init__(connection)
+    def __init__(self):
+        super().__init__()
 
     def adicionar(self, sugestao):
         cursor = self.connection.cursor()

@@ -2,12 +2,13 @@ from PySimpleGUI.PySimpleGUI import TRANSPARENT_BUTTON
 from pessoa import Pessoa
 from estado import Estado
 import PySimpleGUI as sg
+from registro_pessoas import RegistroPessoas
 
 
 class EstadoGerenciarPessoas(Estado):
-    def __init__(self, admin, assinante, registro_pessoas):
-        super().__init__(admin, assinante)
-        self.__registro_pessoas = registro_pessoas
+    def __init__(self):
+        super().__init__()
+        self.__registro_pessoas = RegistroPessoas()
 
     def run(self):
         linha0 = [sg.Text("UFLIX", size=(30,1), font=("Helvetica",25))]
@@ -19,7 +20,7 @@ class EstadoGerenciarPessoas(Estado):
         if self.erro:
             self.container = [linha0, linha1, linha2, linha3, linha4, linha5]
         else:
-            self.container = [linha0, linha1, linha2, linha5]
+            self.container = [linha0, linha1, linha2, linha3, linha5]
         self.window = sg.Window("UFLIX", self.container, font=("Helvetica", 14))
         self.erro = False
 

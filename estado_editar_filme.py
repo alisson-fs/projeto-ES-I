@@ -1,12 +1,13 @@
 from estado import Estado
 from filme import Filme
+from catalogo import Catalogo
 import PySimpleGUI as sg
 
 
 class EstadoEditarFilme(Estado):
-    def __init__(self, admin, assinante, catalogo):
-        super().__init__(admin, assinante)
-        self.__catalogo = catalogo
+    def __init__(self):
+        super().__init__()
+        self.__catalogo = Catalogo()
         self.__catalogo.atual = Filme(" -", " -", " -", " -", " -")
 
     def run(self):

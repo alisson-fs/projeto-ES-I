@@ -1,12 +1,14 @@
 from estado import Estado
 import PySimpleGUI as sg
+from registro_pessoas import RegistroPessoas
+from comentarios import Comentarios
 
 
 class EstadoComentarios(Estado):
-    def __init__(self, admin, assinante, registro_pessoas, comentarios):
-        super().__init__(admin, assinante)
-        self.__registro_pessoas = registro_pessoas
-        self.__comentarios = comentarios
+    def __init__(self):
+        super().__init__()
+        self.__registro_pessoas = RegistroPessoas()
+        self.__comentarios = Comentarios()
 
     def run(self):
         linha0 = [sg.Text("UFLIX", size=(30,1), font=("Helvetica",25))]

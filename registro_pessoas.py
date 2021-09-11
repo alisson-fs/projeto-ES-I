@@ -3,8 +3,8 @@ from registro import Registro
 
 
 class RegistroPessoas(Registro):
-    def __init__(self, connection):
-        super().__init__(connection)
+    def __init__(self):
+        super().__init__()
         self.atual = Pessoa(" -", " -", " -", " -")
 
     def adicionar(self, pessoa):

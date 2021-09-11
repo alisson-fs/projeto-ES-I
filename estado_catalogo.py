@@ -1,13 +1,16 @@
 from estado import Estado
+from registro_pessoas import RegistroPessoas
+from catalogo import Catalogo
+from alugueis import Alugueis
 import PySimpleGUI as sg
 
 
 class EstadoCatalogo(Estado):
-    def __init__(self, admin, assinante, registro_pessoas, catalogo, alugueis):
-        super().__init__(admin, assinante)
-        self.__registro_pessoas = registro_pessoas
-        self.__catalogo = catalogo
-        self.__alugueis = alugueis
+    def __init__(self):
+        super().__init__()
+        self.__registro_pessoas = RegistroPessoas()
+        self.__catalogo = Catalogo()
+        self.__alugueis = Alugueis()
         self.__mensagem_erro = ""
 
     def run(self):
@@ -15,14 +18,14 @@ class EstadoCatalogo(Estado):
         linha1 = [sg.Text("Catálogo:", size=(30,1), font=("Helvetica",15))]
         linha2 = [sg.Listbox(values=self.__catalogo.gerar_lista(), size=(30, 6), key="filme")]
         linha3 = [sg.Text(self.__mensagem_erro, size=(30,1), font=("Helvetica",12))]
-        if self.admin:      
+        if self.__registro_pessoas.atual.admin:      
             linha4 = [sg.Button("Sair"),
                       sg.Button("Visualizar"),
                       sg.Button("Adicionar filme"),
                       sg.Button("Remover filme"),
                       sg.Button("Gerenciar cadastros"),
                       sg.Button("Sugestões")]
-        elif self.assinante:
+        elif self.__registro_pessoas.atual.assinante:
             linha4 = [sg.Button("Sair"), sg.Button("Visualizar"), sg.Button("Sugerir Filme")]
         else:
             linha4 = [sg.Button("Sair"), sg.Button("Alugar"), sg.Button("Realizar assinatura"), sg.Button("Alugados")]
@@ -42,7 +45,7 @@ class EstadoCatalogo(Estado):
             if values["filme"]:
                 filme = self.__catalogo.consultar(values["filme"][0])
                 self.__catalogo.atual = filme
-                if self.admin:
+                if self.__registro_pessoas.atual.admin:
                     return "visualizar_filme_admin"
                 else:
                     return "visualizar_filme_assinante"
@@ -89,9 +92,9 @@ class EstadoCatalogo(Estado):
         if event == "Sugerir Filme":
             self.window.close()
             return "sugerir"
-        if self.admin:
+        if self.__registro_pessoas.atual.admin:
             return "catalogo_admin"
-        elif self.assinante:
+        elif self.__registro_pessoas.atual.assinante:
             return "catalogo_assinante"
         else:
             return "catalogo_cliente"

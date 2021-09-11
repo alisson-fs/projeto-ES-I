@@ -4,8 +4,8 @@ import datetime
 
 
 class Alugueis(Registro):
-    def __init__(self, connection):
-        super().__init__(connection)
+    def __init__(self):
+        super().__init__()
 
     def adicionar(self, aluguel):
         cursor = self.connection.cursor()

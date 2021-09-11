@@ -1,11 +1,11 @@
 from estado import Estado
 import PySimpleGUI as sg
-
+from sugestoes import Sugestoes
 
 class EstadoSugestoes(Estado):
-    def __init__(self, admin, assinante, sugestoes):
-        super().__init__(admin, assinante)
-        self.__sugestoes = sugestoes
+    def __init__(self):
+        super().__init__()
+        self.__sugestoes = Sugestoes()
 
     def run(self):
         linha0 = [sg.Text("UFLIX", size=(30,1), font=("Helvetica",25))]

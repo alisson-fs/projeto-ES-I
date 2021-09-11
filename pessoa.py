@@ -1,8 +1,5 @@
-from aluguel import Aluguel
-from alugueis import Alugueis
 from cartao import Cartao
 import datetime
-import psycopg2
 
 
 class Pessoa:

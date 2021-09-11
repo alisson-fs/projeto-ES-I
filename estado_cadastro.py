@@ -5,9 +5,9 @@ import PySimpleGUI as sg
 
 
 class EstadoCadastro(Estado):
-    def __init__(self, admin, assinante, registro_pessoas):
-        super().__init__(admin, assinante)
-        self.__registro_pessoas = registro_pessoas
+    def __init__(self):
+        super().__init__()
+        self.__registro_pessoas = RegistroPessoas()
 
     def run(self):
         linha0 = [sg.Text("UFLIX", size=(30,1), font=("Helvetica",25))]
@@ -32,7 +32,7 @@ class EstadoCadastro(Estado):
                           linha6, linha7, linha8, linha9, linha10, linha13]
         if self.erro:
                 self.container.insert(11, linha11)
-        if self.admin:
+        if self.__registro_pessoas.atual.admin:
             if self.erro:
                 self.container.insert(12, linha12)
             else:
@@ -50,7 +50,7 @@ class EstadoCadastro(Estado):
                 nome = values["nome"]
                 cpf = values["cpf"]
                 nascimento = str(values["dia"])+"/"+str(values["mes"])+"/"+str(values["ano"])
-                if self.admin:
+                if self.__registro_pessoas.atual.admin:
                     admin = values["admin"]
                 else:
                     admin = False
@@ -61,17 +61,17 @@ class EstadoCadastro(Estado):
                 return "login"
             else:
                 self.erro = True
-                if self.admin:
+                if self.__registro_pessoas.atual.admin:
                     return "cadastro_admin"
                 else:
                     return "cadastro_cliente"
         if event == "Cancelar":
             self.window.close()
-            if self.admin:
+            if self.__registro_pessoas.atual.admin:
                 return "lista_pessoas"
             else:
                 return "login"
-        if self.admin:
+        if self.__registro_pessoas.atual.admin:
             return "cadastro_admin"
         else:
             return "cadastro_cliente"

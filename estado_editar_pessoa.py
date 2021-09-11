@@ -1,12 +1,13 @@
 from estado import Estado
 from pessoa import Pessoa
 import PySimpleGUI as sg
+from registro_pessoas import RegistroPessoas
 
 
 class EstadoEditarPessoa(Estado):
-    def __init__(self, admin, assinante, registro_pessoas):
-        super().__init__(admin, assinante)
-        self.__registro_pessoas = registro_pessoas
+    def __init__(self):
+        super().__init__()
+        self.__registro_pessoas = RegistroPessoas()
         self.__registro_pessoas.atual = Pessoa(" -", " -", " -", " -")
 
     def run(self):

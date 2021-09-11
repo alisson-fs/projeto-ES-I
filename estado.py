@@ -2,11 +2,9 @@ from abc import ABC, abstractmethod
 
 
 class Estado(ABC):
-    def __init__(self, admin = True, assinante = True):
+    def __init__(self):
         self.__container = None
         self.__window = None
-        self.__admin = admin
-        self.__assinante = assinante
         self.__erro = False
         
     @property
@@ -16,14 +14,6 @@ class Estado(ABC):
     @property
     def window(self):
         return self.__window
-
-    @property
-    def admin(self):
-        return self.__admin
-    
-    @property
-    def assinante(self):
-        return self.__assinante
 
     @property
     def erro(self):
@@ -40,14 +30,6 @@ class Estado(ABC):
     @container.setter
     def container(self, container):
         self.__container = container
-
-    @admin.setter
-    def admin(self, admin):
-        self.__admin = admin
-
-    @assinante.setter
-    def assinante(self, assinante):
-        self.__assinante = assinante
 
     @erro.setter
     def erro(self, erro):

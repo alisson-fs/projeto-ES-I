@@ -2,16 +2,19 @@ from estado import Estado
 from cartao import Cartao
 from pessoa import Pessoa
 from aluguel import Aluguel
+from registro_pessoas import RegistroPessoas
+from catalogo import Catalogo
+from alugueis import Alugueis
 import PySimpleGUI as sg
 import datetime
 
 
 class EstadoAlugar(Estado):
-    def __init__(self, admin, assinante, registro_pessoas, catalogo, alugueis):
-        super().__init__(admin, assinante)
-        self.__registro_pessoas = registro_pessoas
-        self.__catalogo = catalogo
-        self.__alugueis = alugueis
+    def __init__(self):
+        super().__init__()
+        self.__registro_pessoas = RegistroPessoas()
+        self.__catalogo = Catalogo()
+        self.__alugueis = Alugueis()
 
     def run(self):
         linha0 = [sg.Text("UFLIX", size=(30,1), font=("Helvetica",25))]

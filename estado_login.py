@@ -1,13 +1,14 @@
 from estado import Estado
 from pessoa import Pessoa
+from registro_pessoas import RegistroPessoas
 import datetime
 import PySimpleGUI as sg
 
 
 class EstadoLogin(Estado):
-    def __init__(self, admin, assinante, registro_pessoas):
-        super().__init__(admin, assinante)
-        self.__registro_pessoas = registro_pessoas
+    def __init__(self):
+        super().__init__()
+        self.__registro_pessoas = RegistroPessoas()
 
     def run(self):
         linha0 = [sg.Text("UFLIX", size=(30,1), font=("Helvetica",25))]

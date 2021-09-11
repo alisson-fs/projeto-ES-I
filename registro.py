@@ -1,11 +1,14 @@
-from abc import ABC, abstractmethod
+import psycopg2
+from singleton import Singleton
 
-
-class Registro(ABC):
-    def __init__(self, connection):
-        self.__connection = connection
+class Registro(metaclass=Singleton):
+    def __init__(self):
+        self.__connection = psycopg2.connect(user="postgres",
+							                 password="postgres",
+							                 host="localhost",
+							                 port="5432",
+							                 database="uflix")
         self.__atual = None
-
 
     @property
     def connection(self):
@@ -23,22 +26,17 @@ class Registro(ABC):
     def atual(self, atual):
         self.__atual = atual
 
-    @abstractmethod
     def adicionar(self, elemento):
         pass
 
-    @abstractmethod
     def remover(self, id):
         pass
 
-    @abstractmethod
     def consultar(self, id):
         pass
 
-    @abstractmethod
     def atualizar(self):
         pass
 
-    @abstractmethod
     def gerar_lista(self):
         pass
