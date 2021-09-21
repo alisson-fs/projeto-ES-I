@@ -18,6 +18,14 @@ class Registro(metaclass=Singleton):
     def atual(self, atual):
         self.__atual = atual
 
+    @property
+    def connection(self):
+        return self.__connection
+
+    @connection.setter
+    def connection(self, connection):
+        self.__connection = connection
+
     def adicionar(self, elemento):
         pass
 
@@ -32,3 +40,5 @@ class Registro(metaclass=Singleton):
 
     def gerar_lista(self):
         pass
+
+    
